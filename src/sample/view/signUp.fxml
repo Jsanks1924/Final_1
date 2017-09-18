@@ -31,10 +31,5 @@
          </font>
       </Label>
       <TextField fx:id="signup_gender" layoutX="33.0" layoutY="236.0" promptText="gender" />
-      <Label fx:id="message" layoutX="317.0" layoutY="228.0" prefHeight="17.0" prefWidth="213.0" text="Label" textFill="#fc0202">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
    </children>
 </AnchorPane>
