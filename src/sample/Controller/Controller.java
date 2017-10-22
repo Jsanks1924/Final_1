@@ -1,30 +1,30 @@
 package sample.Controller;
-import javafx.application.Application;
-import javafx.embed.swing.JFXPanel;
+
+
+import Hash.MyHashMap;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.PasswordField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import sample.model.User;
 import sample.view.Main;
-import javafx.scene.control.TextField;
-import javafx.scene.control.PasswordField;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Stack;
 
-public class Controller {
-    private static Stack<User>list = new Stack();
+import java.io.IOException;
+
+
+public class Controller{
+
+    //private static Stack<User>list = new Stack();
+    private static MyHashMap<Integer, User> list = new MyHashMap<Integer, User>();
     private static boolean logged;
+    private static int count = 0;
+  private static String gender;
+    ObservableList<String> genderList = FXCollections.observableArrayList
+            ("female", "male", "non-binary", "prefer not to say");
     AnchorPane member;
 
     @FXML
@@ -44,12 +44,24 @@ public class Controller {
     @FXML
     PasswordField signup_confirm;
     @FXML
+    PasswordField signup_ssn;
+    @FXML
     TextField signup_phone;
     @FXML
-    TextField signup_birth;
+    DatePicker date;
     @FXML
-    TextField signup_gender;
-    Label message = new Label();
+    ChoiceBox genderChoice;
+    @FXML
+    private void  initialize(){ //fix
+        ChoiceBox<String> genderChoice = new ChoiceBox<>();
+        genderChoice.setValue("unknown");
+        System.out.println(genderChoice.getValue());
+        genderChoice.show();
+        genderChoice.setItems(genderList);
+        genderChoice.getItems();
+
+
+    }
 
     public void showSignupView() throws IOException {
         Stage signUpStage = new Stage();
@@ -59,57 +71,53 @@ public class Controller {
         Scene scene = new Scene(SignUpScene);
         signUpStage.setScene(scene);
         signUpStage.show();
+
+
     }
 
     public void exitPrompt() {
         System.exit(0);
     }
 
+
+
     public void signSubmit() throws IOException {
+        gender = "unknown"; // fix
+        User newUser = new User(signup_first.getText(), signup_last.getText(),gender, date.getValue(), Integer.parseInt(signup_ssn.getText()), signup_user.getText(),
+                signup_email.getText(), signup_pWord.getText(), signup_confirm.getText(), Integer.parseInt(signup_phone.getText()));
 
-        //if (!signup_first.getText().contains("1,2,3,4,5,6,7,8,9,0"))
-            //message.addNotify();
-           // message.setText("no numbers in Name");
-           // message.;
+        System.out.println(newUser.toString());// print
+        /*if (newUser.validateFirst()!=true){
+ //error message for first name
+}else if(newUser.validateLast()!=true){
+    //error mesage for last name
+}else if(newUser.validateDate()!=true){
+//error message for date
+}else if(newUser.validateEmail()!=true){
+//error message for email
+}else if(newUser.validatePhone()!=true){
+//error message for phone #
+}else if(newUser.validateSsn()!=true){
+//error message for social
+{
+ if (newUser.confirmPassword()!=true){
+    //error message for pascode field
+}
+else
+*/
+        list.add(count, newUser);
+        count++;
+        Stage memberStage = new Stage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Main.class.getResource("Member.fxml"));
+        AnchorPane member = loader.load();
+        Scene scene = new Scene(member);
+        memberStage.setScene(scene);
+        memberStage.show();
 
-       // if (!signup_last.getText().contains("1,2,3,4,5,6,7,8,9,0"))
-           // message.addNotify();
-
-            //message.setText("no numbers in Name");
-
-
-     for (int i=0; i <list.size(); i++) {
-    if (signup_user.getText().equals(list.get(i).getUser())){
-        System.out.println("same user name");}
-        //message.addNotify();
-
-        //message.setText("username Already taken");
-else{
-        User newUser = new User(signup_first.getText(), signup_last.getText(), signup_gender.getText(),
-                signup_birth.getText(), signup_user.getText(), signup_email.getText(), signup_pWord.getText(),
-                signup_confirm.getText(), Integer.parseInt(signup_phone.getText()));
-        System.out.println(newUser.toString());
-        if ((newUser.validateEmail() == true)&&(newUser.confirmPassword()==true)){
-            System.out.println(newUser.toString());
-            list.add(newUser);
-            System.out.println(list.size());
-            System.out.println(list.get(0).getPassword() + "index 0");
-            System.out.println(signup_pWord.getText() + "current ?");
-            Stage memberStage = new Stage();
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Main.class.getResource("Member.fxml"));
-            AnchorPane member = loader.load();
-            Scene scene = new Scene(member);
-            memberStage.setScene(scene);
-            memberStage.show();
-        }
-         else{
-            System.out.println("error:(");
-                }
-
-            }
-        }
     }
+
+
 
     public boolean login() throws IOException {
         logged = false;
@@ -125,14 +133,15 @@ else{
                     AnchorPane member = loader.load();
                     Scene scene = new Scene(member);
                     memberStage.setScene(scene);
-                    memberStage.show(); }
+                    memberStage.show();
+                }
+            }
         }
-        }
-                return logged;
+        return logged;
     }
 
-      public void signOut() throws IOException{
-          logged = false;
+    public void signOut() throws IOException {
+        logged = false;
         Stage memberStage = new Stage();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Main.class.getResource("Start.fxml"));
@@ -142,6 +151,7 @@ else{
         memberStage.show();
 
     }
+
 }
 
 
