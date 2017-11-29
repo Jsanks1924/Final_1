@@ -114,7 +114,7 @@ else
         Scene scene = new Scene(member);
         memberStage.setScene(scene);
         memberStage.show();
-
+ 
     }
 
 
