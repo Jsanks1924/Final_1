@@ -1,5 +1,11 @@
 package sample.model;
 
+import javafx.collections.ObservableList;
+import javafx.util.converter.LocalDateTimeStringConverter;
+
+import java.io.IOException;
+import java.time.LocalDate;
+
 /**You must create a user class, which is inherited from Person class with the following attributes:
  * first
  * last
@@ -27,17 +33,15 @@ public class User extends Person {
 
     //constructor
 
-    public User(String newFirst, String newLast, String newGender, String newBirth, String user, String email, String password, String confirm, int phoneNum) {
-        super(newFirst, newLast, newGender, newBirth);
+    public User(String newFirst, String newLast, String newGender, String newBirth, int newSsn, String user, String email, String password, String confirm, int phoneNum) {
+            super(newFirst, newLast, newGender, newBirth, newSsn);
         this.user = user;
         this.email = email;
         this.password = password;
         this.confirm = confirm;
         this.phoneNum = phoneNum;
     }
-
-
-    public User(String first, String last, String user, String email, String password, String confirm, int phoneNum) {
+    public User(String first, String last, String birth, int newSsn, String user, String email, String password, String confirm, int phoneNum) {
         super(first, last);
         this.user = user;
         this.email = email;
@@ -46,6 +50,7 @@ public class User extends Person {
         this.phoneNum = phoneNum;
 
     }
+
 
     public String getUser() {
         return user;
@@ -125,6 +130,14 @@ public class User extends Person {
         }
         return format;
     }
+    public boolean validateFirst() {
+        boolean format = false;
+        if (first.contains(".+[1-9].+")){
+            format = true;
+        }
+        return format;
+    }
+
 
     public boolean confirmPassword() {
 
@@ -146,6 +159,7 @@ public class User extends Person {
         return true;
     }
 }
+
 
 
 

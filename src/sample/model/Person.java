@@ -1,5 +1,11 @@
 
 package sample.model;
+
+import javafx.collections.ObservableList;
+import javafx.util.converter.LocalDateTimeStringConverter;
+
+import java.time.LocalDate;
+
 /**
  You must create a Person class with the following attributes:
 
@@ -8,20 +14,20 @@ package sample.model;
  *SSN
  *dob
  * gender
-
 */
 
 public class Person{
     //attributes
- String first,last,gender,birth;
+ String first,last, gender, birth;
  int ssn;
 
-    public Person(String newFirst, String newLast, String newGender, String newBirth)
+    public Person(String newFirst, String newLast, String newGender, String newBirth,int newSsn)
     {
         this.first = newFirst;
         this.last = newLast;
         this.gender = newGender;
         this.birth = newBirth;
+        this.ssn = newSsn;
     }
     public Person(String first, String last) {
         this.first = null;
