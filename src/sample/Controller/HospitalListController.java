@@ -15,11 +15,11 @@ import sample.model.Hospital;
 import sample.view.HospitalListView;
 import sample.view.Main;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import static sample.view.HospitalListView.LoadHospital;
 
 public class HospitalListController extends Application {
     @FXML
@@ -47,6 +47,7 @@ public class HospitalListController extends Application {
 
     private HospitalListView hospitalApp;
 
+
     @FXML
     public void initialize() {
         //(URL location, ResourceBundle resources) // parameters
@@ -55,6 +56,7 @@ public class HospitalListController extends Application {
         //address.bind(searchKey.textProperty());
        // to.bindBidirectional(toTextField.textProperty());
         //from.bindBidirectional(searchKey.textProperty()
+
         cName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         cAddress.setCellValueFactory(cellData -> cellData.getValue().addressProperty());
         cCity.setCellValueFactory(cellData -> cellData.getValue().cityProperty());
@@ -68,6 +70,7 @@ public class HospitalListController extends Application {
 
     }
 
+
     public void setHospitalApp(HospitalListView hospitalApp) {
         this.hospitalApp = hospitalApp;
         hospitalTable.setItems(hospitalApp.getHospitalData());
@@ -80,6 +83,7 @@ public class HospitalListController extends Application {
     }
 
     public HospitalListView getHospitalApp() {
+
         return hospitalApp;
     }
 }

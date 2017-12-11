@@ -16,6 +16,7 @@ public class Hospital implements Comparable<Hospital>, Serializable {
     private final SimpleStringProperty longitude = new SimpleStringProperty("");
     private final SimpleStringProperty email = new SimpleStringProperty("");
     private final SimpleStringProperty phone = new SimpleStringProperty("");
+    private final SimpleStringProperty photo = new SimpleStringProperty("");
 
     public String getPhoto() {
         return photo.get();
@@ -29,11 +30,11 @@ public class Hospital implements Comparable<Hospital>, Serializable {
         this.photo.set(photo);
     }
 
-    private final SimpleStringProperty photo = new SimpleStringProperty("");
 
 
 
-    public Hospital(String name, String address, String city, String state, String zip, String latitude, String longitude, String email, String phone, String photo) {
+    public Hospital(String name, String address, String city, String state, String zip,
+                    String latitude, String longitude, String email, String phone) {
         setName(name);
         setAddress(address);
         setCity(city);
@@ -43,11 +44,10 @@ public class Hospital implements Comparable<Hospital>, Serializable {
         setLongitude(longitude);
         setEmail(email);
         setPhone(phone);
-        setPhoto(photo);
     }
 
     public Hospital() {
-        this(" ", " ", " ", " ", " ", " ", " ", " ", "","");
+        this(" ", " ", " ", " ", " ", " ", " ", " ", "");
     }
 
     public String getName() {

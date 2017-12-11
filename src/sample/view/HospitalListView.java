@@ -4,6 +4,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -25,86 +27,100 @@ public class HospitalListView {
     private static String longitude;
     private static String phone;
     private static String email;
-    private static String photo;
     private static BorderPane rootLayout;
     private static ObservableList<Hospital> hospitalData = FXCollections.observableArrayList();
 
     public  HospitalListView() throws IOException {
-       LoadHospital();
+       loadHospital();
        initRootLayout();
        showHospitalView();
-        Parent hospitalListView = FXMLLoader.load(getClass().getResource("HospitalList.fxml"));
-        //hospitalListStage.setTitle("Hospital List Page");
-        Scene hospitalListScene = new Scene(hospitalListView,600,600);
-        hospitalListStage.setScene(hospitalListScene);
-        hospitalListStage.show();
+        //Parent hospitalListView = FXMLLoader.load(getClass().getResource("HospitalList.fxml"));
+        hospitalListStage.setTitle("Hospital List Page");
+       // Scene hospitalListScene = new Scene(hospitalListView,600,600);
+       // hospitalListStage.setScene(hospitalListScene);
+      //  hospitalListStage.show();
     }
 
 
-    public static void initRootLayout(){
-        try{
+    private void initRootLayout() {
+        try {
+            // Load root layout from fxml file.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(HospitalListView.class.getResource("RootLayout.fxml"));
             rootLayout = loader.load();
 
-            Scene scene =new Scene(rootLayout);
+            // Show the scene containing the root layout.
+            Scene scene = new Scene(rootLayout);
             hospitalListStage.setScene(scene);
+            hospitalListStage.setResizable(true);
+
             hospitalListStage.show();
-        } catch(IOException e){
-            System.out.println("0000000000000000000"); // print test
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void LoadHospital()  {
-        MyBST<Hospital> hospitalTree = new MyBST<>();
+    public void loadHospital() {
+        MyBST hospitalTree = new MyBST<Hospital>();
         List hospitalList = null;
+
         try {
             hospitalList = ReadExcel.excelReader("PersonList.xls");
         } catch (Exception e) {
-            System.out.println("problem yo");
+            System.err.println("Problem reading  file.");
             e.printStackTrace();
         }
-        // ReadExcel.showExcelData(hospitalList); // print test
-            for (int i = 1; i < hospitalList.size(); i++) {
-                List record = (List) hospitalList.get(i);
-                name =  String.valueOf(record.get(0));
-                streetAddress = String.valueOf(record.get(1));
-                city = String.valueOf(record.get(2));
-                state = String.valueOf(record.get(3));
-                zip = String.valueOf(record.get(4));
-                latitude = String.valueOf(record.get(5));
-                longitude = String.valueOf(record.get(6));
-                email = String.valueOf(record.get(7));
-                phone =String.valueOf(record.get(8));
-                Hospital hospital = new Hospital(name,streetAddress,city,state,zip,latitude,longitude,email, phone, photo);
-                hospitalTree.add(hospital);
-                hospitalData.add(hospital);
-            }
-
-           // System.out.println(hospitalData);//print test
+        //ReadExcelFile.showExcelData(restaurantList);
+        for (int i = 0; i < hospitalList.size(); i++) {
+            List record = (List) hospitalList.get(i);
+            //System.out.println(record);
+            //System.out.println(record.get(col));
+            name = String.valueOf(record.get(0));
+            streetAddress = String.valueOf(record.get(1));
+            city = String.valueOf(record.get(2));
+            state = String.valueOf(record.get(3));
+            zip = String.valueOf(record.get(4));
+            latitude = String.valueOf(record.get(5));
+            longitude = String.valueOf(record.get(6));
+            phone = String.valueOf(record.get(7));
+            email = String.valueOf(record.get(8));
+            Hospital hospital = new Hospital(name, streetAddress, city, state, zip, latitude, longitude, phone, email);
+            hospitalTree.add(hospital);
+            hospitalData.add(hospital);
+        }
+        hospitalTree.reset(MyBST.INORDER); //Set the order of the BST as Inorder
     }
 
-   static public ObservableList<Hospital> getHospitalData() {
-        return hospitalData;
-    }
 
     public void showHospitalView() {
-        FXMLLoader loader = new FXMLLoader();
         try {
-            loader.setLocation(HospitalListView.class.getResource("HospitalList.fxml"));
-            AnchorPane personOverview = loader.load();
-            rootLayout.setCenter(personOverview);
-            HospitalListController controller = loader.getController();
-            controller.setHospitalApp((HospitalListView)this.getHospitalData());
+            // Load restaurant overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(HospitalListView.class.getResource("PersonList.xls.fxml"));
+            SplitPane restaurantOverview = loader.load();
 
+            // Set restaurant overview into the center of root layout.
+            rootLayout.setCenter(restaurantOverview);
+            ScrollPane pane = new ScrollPane();
+            pane.prefWidthProperty().bind(restaurantOverview.widthProperty());
+            pane.prefHeightProperty().bind(restaurantOverview.heightProperty());
+            pane.setContent(restaurantOverview);
+            pane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+
+            // Give the controller access to the main app.
+            HospitalListController controller = loader.getController();
+            controller.setHospitalApp(this);
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("111111111111111"); // print test
         }
-        System.out.println((this.getHospitalData()+ " jjjjj"));
-
     }
+
+    static public ObservableList<Hospital> getHospitalData() { return hospitalData; }
+
+    public void setRestaurantData(ObservableList<Hospital> restaurantData) {
+        this.hospitalData = hospitalData;
+    }
+
 
 
 

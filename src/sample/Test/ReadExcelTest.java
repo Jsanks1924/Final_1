@@ -1,5 +1,7 @@
 package sample.Test;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.junit.jupiter.api.Test;
 import sample.Collection.MyBST;
 import sample.Excel.ReadExcel;
@@ -19,6 +21,8 @@ class ReadExcelTest {
     private String phone;
     private String email;
     private String photo;
+    private static ObservableList<Hospital> hospitalData = FXCollections.observableArrayList();
+
     @Test
     void excelReader() throws Exception {
         MyBST<Hospital> hospitalTree = new MyBST<>();
@@ -45,16 +49,19 @@ class ReadExcelTest {
             photo = String.valueOf(record.get(9));
 
 
-            Hospital hospital = new Hospital(name,streetAddress,city,state,zip,latitude,longitude,email, phone, photo);
+            Hospital hospital = new Hospital(name,streetAddress,city,state,zip,latitude,longitude,email, phone);
             hospitalTree.add(hospital);
-        }
-Hospital element= null;
-        int treesize=hospitalTree.reset(MyBST.INORDER);
-        System.out.println("the tree inorder is:");
-        for (int count =  1; count <= treesize; count++){
-            element= hospitalTree.getNext((MyBST.INORDER));
-            System.out.println(element);
+            hospitalData.add(hospital);
         }
 
-    }
-}
+            System.out.println(hospitalData);
+        }
+//Hospital element= null;
+        //int treesize=hospitalTree.reset(MyBST.INORDER);
+       // System.out.println("the tree inorder is:");
+        //for (int count =  1; count <= treesize; count++){
+           // element= hospitalTree.getNext((MyBST.INORDER));
+         //   System.out.println(element);
+        }
+
+
