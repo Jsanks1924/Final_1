@@ -10,23 +10,16 @@ public class MyBST<data extends Comparable<data>> implements IMyBST<data> {
         protected LinkedList<data> postOrderQueue;  // queue of info
         boolean found;   // used for remove
 
-        /**
-         * Creates an empty BST object
-         */
+        
         public MyBST() {
             root = null;
         }
 
-        /**
-         * Returns true if the BST is empty; otherwise, returns false
-         */
         public boolean isEmpty() {
             return (root == null);
         }
 
-        /**
-         * Returns the number of elements in the tree
-         */
+
         private int recSize(MyBSTNode<data> tree) {
             if (tree == null)
                 return 0;
@@ -34,16 +27,12 @@ public class MyBST<data extends Comparable<data>> implements IMyBST<data> {
                 return recSize(tree.getLeft()) + recSize(tree.getRight()) + 1;
         }
 
-        /**
-         * Returns the number of elements in the BST
-         */
+
         public int size() {
             return recSize(root);
         }
 
-        /**
-         * Returns the number of elements in the BST
-         */
+
         public int size2() throws Underflow {
             int count = 0;
             if (root != null) {
@@ -63,9 +52,7 @@ public class MyBST<data extends Comparable<data>> implements IMyBST<data> {
             return count;
         }
 
-        /**
-         * Returns true if tree contains an element data such that data.compareTo(element) == 0; otherwise, returns false
-         */
+
         private boolean recContains(data element, MyBSTNode<data> tree) {
             if (tree == null)
                 return false;       // element is not found
@@ -77,16 +64,12 @@ public class MyBST<data extends Comparable<data>> implements IMyBST<data> {
                 return true;        // element is found
         }
 
-        /**
-         * Returns true if the BST contains an element data such that data.compareTo(element) == 0; otherwise, returns false
-         */
         public boolean contains(data element) {
             return recContains(element, root);
         }
 
-        /**
-         * Returns an element data from tree such that data.compareTo(element) == 0 if no such element exists, returns null
-         */
+
+
         private data recGet(data element, MyBSTNode<data> tree) {
             if (tree == null)
                 return null;             // element is not found
@@ -98,17 +81,11 @@ public class MyBST<data extends Comparable<data>> implements IMyBST<data> {
                 return tree.getInfo();  // element is found
         }
 
-        /**
-         * Returns an element data from the BST such that data.compareTo(element) == 0;
-         * if no such element exists, returns null
-         */
+
         public data get(data element) {
             return recGet(element, root);
         }
 
-        /**
-         * Adds an element to the tree; tree retains its BST property
-         */
         private MyBSTNode<data> recAdd(data element, MyBSTNode<data> tree) {
             if (tree == null)
                 // Addition place found
@@ -120,28 +97,18 @@ public class MyBST<data extends Comparable<data>> implements IMyBST<data> {
             return tree;
         }
 
-        /**
-         * Adds an element to the BST. The tree retains its BST property
-         */
+
         public void add(data element) {
             root = recAdd(element, root);
         }
 
-        /**
-         * Returns the information held in the rightmost node in the tree
-         */
         private data getPredecessor(MyBSTNode<data> tree) {
             while (tree.getRight() != null)
                 tree = tree.getRight();
             return tree.getInfo();
         }
 
-        /**
-         * Removes the information at the node referenced by the tree. The user's data in the node referenced by tree is no
-         * longer in the tree.  If tree is a leaf node or has only a non-null child pointer, the node pointed to by tree
-         * is removed; otherwise, the user's data is replaced by its logical predecessor and the predecessor's
-         * node is removed
-         */
+
         private MyBSTNode<data> removeNode(MyBSTNode<data> tree) {
             data data;
 
@@ -157,10 +124,7 @@ public class MyBST<data extends Comparable<data>> implements IMyBST<data> {
             }
         }
 
-        /**
-         * Removes an element data from the tree such that data.compareTo(element) == 0, and returns true; if no such element
-         * exists, returns false
-         */
+
         private MyBSTNode<data> recRemove(data element, MyBSTNode<data> tree) {
             if (tree == null)
                 found = false;
@@ -175,18 +139,13 @@ public class MyBST<data extends Comparable<data>> implements IMyBST<data> {
             return tree;
         }
 
-        /**
-         * Removes an element e from this BST such that e.compareTo(element) == 0 and returns true; if no such element
-         * exists, returns false.
-         */
+
         public boolean remove(data element) throws Underflow {
             root = recRemove(element, root);
             return found;
         }
 
-        /**
-         * Initializes inOrderQueue with the tree elements in inOrder order
-         */
+
         private void inOrder(MyBSTNode<data> tree) {
             if (tree != null) {
                 inOrder(tree.getLeft());
@@ -195,9 +154,7 @@ public class MyBST<data extends Comparable<data>> implements IMyBST<data> {
             }
         }
 
-        /**
-         * Initializes preOrderQueue with the tree elements in preOrder order
-         */
+
         private void preOrder(MyBSTNode<data> tree) {
             if (tree != null) {
                 preOrderQueue.add(tree.getInfo());
@@ -206,9 +163,7 @@ public class MyBST<data extends Comparable<data>> implements IMyBST<data> {
             }
         }
 
-        /**
-         * Initializes postOrderQueue with the tree elements in postOrder order
-         */
+
         private void postOrder(MyBSTNode<data> tree) {
             if (tree != null) {
                 postOrder(tree.getLeft());
@@ -217,10 +172,7 @@ public class MyBST<data extends Comparable<data>> implements IMyBST<data> {
             }
         }
 
-        /**
-         * Initializes current position for an iteration through this BST in orderType order. Returns
-         * current number of nodes in the BST
-         */
+
         public int reset(int orderType) {
             int numNodes = size();
 
@@ -238,10 +190,6 @@ public class MyBST<data extends Comparable<data>> implements IMyBST<data> {
             return numNodes;
         }
 
-        /**
-         * Returns the element at the current position on the BST for orderType
-         * and advances the value of the current position based on the orderType.
-         */
         public data getNext(int orderType) {
             if (orderType == INORDER)
                 return inOrderQueue.remove();

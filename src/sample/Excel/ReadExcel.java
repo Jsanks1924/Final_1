@@ -1,5 +1,8 @@
 package sample.Excel;
 
+/**
+ * Created by tkanchanawanchai6403 on 7/21/2016.
+ */
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -13,14 +16,15 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-
-
 public class ReadExcel {
-    String filename = "PersonList.xls";
 
-    @SuppressWarnings({ "unchecked", "unchecked" })
     public static List excelReader(String fname) throws Exception {
+        // An excel file name. You can create a file name with a full
+        // path information.
+        //C:\Users\tkanchanawanchai6403\Documents
         String filename = fname;
+
+        // Create an ArrayList to store the data read from excel sheet.
         List sheetData = new ArrayList();
         FileInputStream fis = null;
         try {
@@ -66,7 +70,7 @@ public class ReadExcel {
             }
         }
 
-return sheetData;
+        return sheetData;
     }
 
     public static void showExcelData(List sheetData) {

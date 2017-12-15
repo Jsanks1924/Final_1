@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -30,7 +28,6 @@
          </font>
       </Label>
       <Button fx:id="cnacleBtn" layoutX="444.0" layoutY="355.0" mnemonicParsing="false" onAction="#signOut" prefHeight="27.0" prefWidth="110.0" text="Cancel" />
-      <DatePicker fx:id="date" layoutX="33.0" layoutY="127.0" prefHeight="27.0" prefWidth="167.0" promptText="Date of Birth" />
       <MenuBar layoutY="1.0" prefHeight="29.0" prefWidth="673.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
@@ -43,14 +40,7 @@
       <Button layoutX="351.0" layoutY="44.0" mnemonicParsing="false" text="Browse" />
       <ImageView fitHeight="76.0" fitWidth="110.0" layoutX="427.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true" />
       <PasswordField fx:id="signup_ssn" layoutX="349.0" layoutY="168.0" prefHeight="27.0" prefWidth="194.0" promptText="Social Security #" />
-      <Label layoutX="210.0" layoutY="49.0" prefHeight="17.0" prefWidth="110.0" text="incorrect format" textFill="#ef0000" />
-      <Label layoutX="210.0" layoutY="90.0" prefHeight="17.0" prefWidth="110.0" text="incorrect format" textFill="#ef0000" />
-      <Label layoutX="210.0" layoutY="173.0" prefHeight="17.0" prefWidth="110.0" text="incorrect format" textFill="#ef0000" />
-      <Label layoutX="210.0" layoutY="213.0" prefHeight="17.0" prefWidth="110.0" text="username taken" textFill="RED" />
-      <Label layoutX="210.0" layoutY="251.0" prefHeight="17.0" prefWidth="110.0" text="incorrect format" textFill="#ef0000" />
-      <Label layoutX="556.0" layoutY="167.0" prefHeight="17.0" prefWidth="110.0" text="incorrect format" textFill="#ef0000" />
-      <Label layoutX="557.0" layoutY="197.0" prefHeight="57.0" prefWidth="185.0" text="passcode must contain at &#10;least 1 number, 1 upper case,&#10;1 lower case, &amp; 1 special char" textFill="#fc0505" />
-      <Label layoutX="559.0" layoutY="255.0" prefHeight="17.0" prefWidth="158.0" text="passcodes must match" textFill="#ef0000" />
-      <ChoiceBox fx:id="genderChoice" layoutX="352.0" layoutY="114.0" prefWidth="150.0" />
+      <TextField fx:id="signup_Gender" layoutX="350.0" layoutY="127.0" prefHeight="27.0" prefWidth="193.0" promptText="Gender" />
+      <TextField fx:id="signup_birth" layoutX="33.0" layoutY="127.0" promptText="Date" />
    </children>
 </AnchorPane>

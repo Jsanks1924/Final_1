@@ -13,15 +13,18 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import sample.model.User;
+import sample.model.UserDB;
+import sample.model.UserIO;
 import sample.view.HospitalListView;
 import sample.view.Main;
 import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Stack;
+import sample.view.HospitalListView;
+
 
 public class LoginController {
     private static Stack<User>list = new Stack();
@@ -51,7 +54,7 @@ public class LoginController {
     @FXML
     TextField signup_birth;
     @FXML
-    TextField signup_gender;
+    TextField signup_Gender;
     Label message = new Label();
 
     public LoginController() throws Exception {
@@ -72,72 +75,82 @@ public class LoginController {
     }
 
     public void signSubmit() throws IOException {
+boolean validFormat = false;
+        if (signup_first.getText().contains("1,2,3,4,5,6,7,8,9,0")){
+            signup_first.setStyle("-fx-background-color: red ; -fx-text-fill: white; -fx-border-color: red");
+validFormat=false;}
 
-        //if (!signup_first.getText().contains("1,2,3,4,5,6,7,8,9,0"))
-        //message.addNotify();
-        // message.setText("no numbers in Name");
-        // message.;
+        if (signup_last.getText().contains("1,2,3,4,5,6,7,8,9,0")){
+            signup_last.setStyle("-fx-background-color: red ; -fx-text-fill: white; -fx-border-color: red");
+        validFormat=false;}
 
-        // if (!signup_last.getText().contains("1,2,3,4,5,6,7,8,9,0"))
-        // message.addNotify();
+        if (signup_birth.getText().contains("a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z")){
+            signup_birth.setStyle("-fx-background-color: red ; -fx-text-fill: white; -fx-border-color: red");
+            validFormat=false;}
 
-        //message.setText("no numbers in Name");
+       // if (!signup_pWord.getText().contains("a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z")
+        //       || (!signup_birth.getText().contains("1,2,3,4,5,6,7,8,9,0"))
+         //       ||signup_birth.getLength()<4){
+         //   signup_pWord.setStyle("-fx-background-color: red ; -fx-text-fill: white; -fx-border-color: red");
+         //   validFormat=false;}
 
+        if (signup_ssn.getText().contains("a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z")){
+            signup_ssn.setStyle("-fx-background-color: red ; -fx-text-fill: white; -fx-border-color: red");
+            validFormat=false;}
 
-        for (int i=0; i <list.size(); i++) {
-            if (signup_user.getText().equals(list.get(i).getUser())){
-                System.out.println("same user name");}
-            //message.addNotify();
+            if (!signup_Gender.getText().equalsIgnoreCase("male")
+                    ||!signup_Gender.getText().equalsIgnoreCase("female")) {
+                //signup_Gender.setStyle("-fx-background-color: red ; -fx-text-fill: white; -fx-border-color: red");
+                validFormat=false;}
 
-            //message.setText("username Already taken");
-            else{
-                User newUser = new User(signup_first.getText(), signup_last.getText(),
-                        signup_gender.getText(), Integer.parseInt(signup_birth.getText()),
-                        signup_user.getText(), signup_email.getText(), signup_pWord.getText(),
-                        signup_confirm.getText(), Integer.parseInt(signup_phone.getText()));
-                System.out.println(newUser.toString());
-
-                if ((newUser.validateEmail() == true)&&(newUser.confirmPassword()==true)){
-                    System.out.println(newUser.toString());
-                    list.add(newUser);
-                    System.out.println(list.size());
-                    System.out.println(list.get(0).getPassword() + "index 0");
-                    System.out.println(signup_pWord.getText() + "current ?");
-                    Stage memberStage = new Stage();
-                    FXMLLoader loader = new FXMLLoader();
-                    loader.setLocation(Main.class.getResource("Member.fxml"));
-                    AnchorPane member = loader.load();
-                    Scene scene = new Scene(member);
-                    memberStage.setScene(scene);
-                    memberStage.show();
+                if (signup_phone.getText().contains("a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z")){
+                    signup_phone.setStyle("-fx-background-color: red ; -fx-text-fill: white; -fx-border-color: red");
+                    validFormat=false;}
+                    else{
+                    validFormat=true;
                 }
-                else{
-                    System.out.println("error:(");
-                }
+        if(signup_pWord.getText().equals(signup_confirm.getText())&&(validFormat=true)) {
+            User user = new User(signup_first.getText(), signup_last.getText(),
+                    signup_Gender.getText(),
+                    Integer.parseInt(signup_birth.getText()),
+                    signup_user.getText(), signup_email.getText(), signup_pWord.getText(),
+                    signup_confirm.getText(), Integer.parseInt(signup_phone.getText()));
+            UserDB.getUsers().add(user);
 
-            }
+            signOut();
+        } else {
+            signup_pWord.setStyle("-fx-background-color: red ; -fx-text-fill: white; -fx-border-color: red");
+            signup_confirm.setStyle("-fx-background-color: red; -fx-text-fill: white; -fx-border-color: red");
         }
+        System.out.println(UserDB.getUsers());
     }
 
-    public void login() throws IOException {
-        logged = true;
-        //for (int i = 0; i < list.size(); i++) {
 
 
-            //if (usNameFld.getText().equals(list.get(i).getUser())) { //&& (signup_pWord.getText().contains(list.get(i).getPassword()))) ;
-              // logged = true;
-               // if (logged == true) {
-                    Stage memberStage = new Stage();
-                    FXMLLoader loader = new FXMLLoader();
-                    loader.setLocation(Main.class.getResource("HospitalList.fxml"));
-                    AnchorPane member = loader.load();
-                    Scene scene = new Scene(member);
-                    memberStage.setScene(scene);
-                    memberStage.show(); }
-          //  }
-      //  }
-       // return logged;
-    //}
+boolean exist = false;
+    public void login() {
+        //iterate thru the userDB to find if username exists
+       // for(int i = 0; i< UserDB.getUsers().size(); i++) {
+            //compare uname from user input to each username from userDB
+            //if (usNameFld.getText().equals(UserDB.getUsers().get(i).getUser())) {
+                //&& pw.getText().equals(UserDB.getUsers().get(i).getPassword()
+               // System.out.println("Welcome " +usNameFld.getText());
+                try {
+                    new HospitalListView();
+                } catch (IOException e) {
+                    System.err.println("Error opening hospital list view!");
+                    e.printStackTrace();
+                }
+                exist = true;
+            }
+
+
+    public void openSignupView() throws IOException {
+        System.out.println("Open signup view");
+        new HospitalListView();
+    }
+
+
 
     public void signOut() throws IOException{
         logged = false;

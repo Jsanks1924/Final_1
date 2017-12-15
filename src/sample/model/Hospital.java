@@ -7,16 +7,15 @@ import javafx.beans.value.ObservableValue;
 import java.io.Serializable;
 
 public class Hospital implements Comparable<Hospital>, Serializable {
-    private final SimpleStringProperty name = new SimpleStringProperty("");
-    private final SimpleStringProperty address = new SimpleStringProperty("");
-    private final SimpleStringProperty city = new SimpleStringProperty("");
-    private final SimpleStringProperty state = new SimpleStringProperty("");
-    private final SimpleStringProperty zip = new SimpleStringProperty("");
-    private final SimpleStringProperty latitude = new SimpleStringProperty("");
-    private final SimpleStringProperty longitude = new SimpleStringProperty("");
-    private final SimpleStringProperty email = new SimpleStringProperty("");
-    private final SimpleStringProperty phone = new SimpleStringProperty("");
-    private final SimpleStringProperty photo = new SimpleStringProperty("");
+    private SimpleStringProperty name = new SimpleStringProperty("");
+    private SimpleStringProperty address = new SimpleStringProperty("");
+    private  SimpleStringProperty city = new SimpleStringProperty("");
+    private  SimpleStringProperty state = new SimpleStringProperty("");
+    private  SimpleStringProperty zip = new SimpleStringProperty("");
+    private  SimpleStringProperty latitude = new SimpleStringProperty("");
+    private  SimpleStringProperty longitude = new SimpleStringProperty("");
+    private  SimpleStringProperty phone = new SimpleStringProperty("");
+    private  SimpleStringProperty photo = new SimpleStringProperty("");
 
     public String getPhoto() {
         return photo.get();
@@ -34,7 +33,7 @@ public class Hospital implements Comparable<Hospital>, Serializable {
 
 
     public Hospital(String name, String address, String city, String state, String zip,
-                    String latitude, String longitude, String email, String phone) {
+                    String latitude, String longitude,String phone, String photo) {
         setName(name);
         setAddress(address);
         setCity(city);
@@ -42,12 +41,24 @@ public class Hospital implements Comparable<Hospital>, Serializable {
         setZip(zip);
         setLatitude(latitude);
         setLongitude(longitude);
-        setEmail(email);
         setPhone(phone);
+        setPhoto(photo);
+    }
+
+    public Hospital(String latitude, String longitude) {
+        this.name = new SimpleStringProperty("");
+        this.address = new SimpleStringProperty("");
+        this.city = new SimpleStringProperty("");
+        this.state = new SimpleStringProperty("");
+        this.zip = new SimpleStringProperty("");
+        this.latitude = new SimpleStringProperty(latitude);
+        this.longitude = new SimpleStringProperty(longitude);
+        this.phone = new SimpleStringProperty("");
+        this.photo = new SimpleStringProperty("");
     }
 
     public Hospital() {
-        this(" ", " ", " ", " ", " ", " ", " ", " ", "");
+        this(" ", " ", " ", " ", " ", " ", " ", " ","");
     }
 
     public String getName() {
@@ -134,16 +145,27 @@ public class Hospital implements Comparable<Hospital>, Serializable {
         this.longitude.set(longitude);
     }
 
-    public String getEmail() {
-        return email.get();
+
+    @Override
+    public String toString() {
+        return "Hospital{" +
+                "name=" + name +
+                ", address=" + address +
+                ", city=" + city +
+                ", state=" + state +
+                ", zip=" + zip +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", phone=" + phone +
+                ", photo=" + photo +
+                '}';
     }
 
-    public SimpleStringProperty emailProperty() {
-        return email;
-    }
+    @Override
+    public int compareTo(Hospital o) {
 
-    public void setEmail(String email) {
-        this.email.set(email);
+        int compare = this.latitude.get().compareTo(o.getLatitude());
+        return (compare == 0) ? this.longitude.get().compareTo(o.getLongitude()) : compare;
     }
 
     public String getPhone() {
@@ -158,26 +180,6 @@ public class Hospital implements Comparable<Hospital>, Serializable {
         this.phone.set(phone);
     }
 
-    @Override
-    public String toString() {
-        return "Hospital{" +
-                "name='" + name + '\'' +
-                ", address='" + address + '\'' +
-                ", city='" + city + '\'' +
-                ", state='" + state + '\'' +
-                ", zip='" + zip + '\'' +
-                ", latitude='" + latitude + '\'' +
-                ", longitude='" + longitude + '\'' +
-                ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
-                '}';
-    }
 
-    @Override
-    public int compareTo(Hospital o) {
-        return 0;
-    }
-
-
-    //}
 }
+
